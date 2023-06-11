@@ -1,8 +1,24 @@
-import { names } from '@/globals/names';
-import { swiftTooltip } from '@/globals/swiftBuilders';
+import { names, routes } from '@/globals/constants';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
 import { IoLogoGameControllerB } from 'react-icons/Io';
+
+type LinkProps = {
+  href: string;
+  className?: string;
+  children?: React.ReactNode;
+};
+
+function NavLink({ href, className, children }: LinkProps) {
+  return (
+    <Link
+      href={href}
+      className={`hover:text-yellow-400 transition-colors ${className}`}
+    >
+      {children}
+    </Link>
+  );
+}
 
 export default function Navbar() {
   return (
@@ -11,12 +27,11 @@ export default function Navbar() {
         <span className='text-xl'>{names.siteName}</span>
         <IoLogoGameControllerB className='fill-yellow-400 self-center text-xl' />
       </Link>
-      <span>
-        <Link href={'/jeoparty'}>Jeoparty</Link>
+      <span className='flex gap-2'>
+        <NavLink href={routes.about}>About</NavLink>
+        <NavLink href={routes.jeoparty}>Jeoparty</NavLink>
       </span>
-      <ul
-        className={`hover:cursor-not-allowed ${swiftTooltip} after:content-['in_development...'] after:whitespace-nowrap after:-translate-x-full after:rounded-tr-none`}
-      >
+      <ul className='hover:cursor-not-allowed tooltip-aftr after:content-["in_development..."] after:whitespace-nowrap after:-translate-x-full after:rounded-tr-none'>
         <FaBars className='text-2xl px-1' />
       </ul>
     </nav>

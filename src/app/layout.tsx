@@ -1,6 +1,7 @@
 import Navbar from '@/components/navbar';
 import './globals.css';
 import { Mukta } from 'next/font/google';
+import { Footer } from '@/components/footer';
 
 const inter = Mukta({ weight: '400', subsets: ['latin'] });
 
@@ -19,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         {children}
-        <footer>test footer</footer>
+        <Footer />
       </body>
     </html>
   );
