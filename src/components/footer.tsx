@@ -42,7 +42,7 @@ function FooterLink({ children, link, notExternal }: LinkProps) {
 
 export function Footer() {
   return (
-    <footer className='p-2 pb-10 flex justify-around'>
+    <footer className='p-2 pb-10 flex flex-col sm:flex-row justify-around'>
       <Column>
         <span className='flex text-xl gap-1'>
           {names.siteName}
