@@ -25,7 +25,7 @@ export default function Navbar() {
     <nav className='p-2 flex justify-between'>
       <Link href={'/'} className='flex gap-1'>
         <span className='text-xl'>{names.siteName}</span>
-        <IoLogoGameControllerB className='fill-yellow-400 self-center text-xl' />
+        <IoLogoGameControllerB className='fill-yellow-400 text-xl' />
       </Link>
       <span className='flex gap-2'>
         <NavLink href={routes.about}>About</NavLink>

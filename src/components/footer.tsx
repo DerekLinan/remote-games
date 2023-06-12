@@ -8,7 +8,7 @@ import {
   FaExternalLinkAlt,
 } from 'react-icons/fa';
 
-const iconStyle = 'self-center text-xl';
+const iconStyle = 'text-xl';
 
 type ColumnProps = {
   children?: React.ReactNode;
@@ -34,7 +34,7 @@ function FooterLink({ children, link, notExternal }: LinkProps) {
     >
       {children}
       {!notExternal && (
-        <FaExternalLinkAlt className='opacity-50 self-center text-xs group-hover/link:text-sm' />
+        <FaExternalLinkAlt className='opacity-50 text-xs group-hover/link:text-sm' />
       )}
     </Link>
   );
@@ -46,7 +46,7 @@ export function Footer() {
       <Column>
         <span className='flex text-xl gap-1'>
           {names.siteName}
-          <IoLogoGameControllerB className='fill-yellow-400 self-center text-xl' />
+          <IoLogoGameControllerB className='fill-yellow-400 text-xl' />
         </span>
         <FooterLink link={routes.about} notExternal>
           About
