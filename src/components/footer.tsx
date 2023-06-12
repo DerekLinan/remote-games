@@ -21,7 +21,11 @@ type LinkProps = {
 };
 
 function Column({ children }: ColumnProps) {
-  return <span className='flex flex-col gap-1 items-center'>{children}</span>;
+  return (
+    <div className='flex flex-col flex-grow basis-0 gap-1 items-center'>
+      {children}
+    </div>
+  );
 }
 
 function FooterLink({ children, link, notExternal }: LinkProps) {
@@ -51,9 +55,13 @@ export function Footer() {
         <FooterLink link={routes.about} notExternal>
           About
         </FooterLink>
+        <FooterLink link={routes.contact} notExternal>
+          Contact
+        </FooterLink>
       </Column>
       <Column>
         <FooterLink link={links.projectGitHub}>Source Code</FooterLink>
+        <FooterLink link={links.jservice}>Jeopardy API</FooterLink>
       </Column>
       <Column>
         <p>By Derek Linan, 2023</p>
