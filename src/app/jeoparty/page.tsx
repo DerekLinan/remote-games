@@ -23,51 +23,53 @@ export default function Jeopardy() {
   };
   return (
     <div className='m-4'>
-      <div className='border border-white sticky top-2 left-2 right-2'>
+      <div className='border border-white sticky top-2 left-2 right-2 my-2'>
         Stat panel
       </div>
-      <div className='overflow-auto inline-grid grid-flow-col grid-cols-6 grid-rows-6 gap-4 columns-7xl'>
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+      <div className='overflow-auto'>
+        <div className='min-w-[50rem] grid grid-flow-col grid-cols-6 grid-rows-6 gap-4'>
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
 
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
 
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
 
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
 
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
 
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Right} />
-        <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Unplayed} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Right} />
+          <GameSquare clue={testClue} state={SQUARESTATE.Wrong} />
+        </div>
       </div>
     </div>
   );

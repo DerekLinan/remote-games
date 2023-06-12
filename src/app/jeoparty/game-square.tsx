@@ -11,7 +11,7 @@ type Props = Clue & {
 
 function DisplayUnplayed({ clue }: Clue) {
   return (
-    <div className='p-4 flex flex-col justify-center h-full bg-gradient-to-br from-blue-800 to-blue-700'>
+    <div className='p-2 flex flex-col justify-center h-full bg-gradient-to-br from-blue-800 to-blue-700'>
       <span className='bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-yellow-200 sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl'>
         ${clue.value}
       </span>
@@ -21,9 +21,11 @@ function DisplayUnplayed({ clue }: Clue) {
 
 function DisplayAnswered({ clue, state }: Props) {
   const wasRight = state === SQUARESTATE.Right;
+  const prefixStyle = 'text-sm font-bold';
+
   return (
     <div
-      className={`p-4 ${
+      className={`p-2 text-xs xl:text-base ${
         wasRight
           ? 'bg-gradient-to-tr from-blue-800 to-blue-700'
           : 'bg-gradient-to-b from-blue-950 to-blue-900'
@@ -36,9 +38,16 @@ function DisplayAnswered({ clue, state }: Props) {
             : 'from-gray-300 to-gray-400'
         }`}
       >
-        <div>{clue.question}</div>
-        <div>{clue.answer}</div>
-        <div>{new Date(clue.airdate).getFullYear()}</div>
+        <div>
+          <span className={prefixStyle}>Q:</span> {clue.question}
+        </div>
+        <div>
+          <span className={prefixStyle}>A:</span> {clue.answer}
+        </div>
+        <div>
+          <span className={prefixStyle}>Aired:</span>{' '}
+          {new Date(clue.airdate).getFullYear()}
+        </div>
         <div className='flex justify-between'>
           {clue.value}
           {wasRight ? (
@@ -68,5 +77,5 @@ export default function GameSquare({ clue, state }: Props) {
   }
 
   //TODO move up one level into the mapping
-  return <button className='min-w-j-width overflow-hidden'>{content}</button>;
+  return <button>{content}</button>;
 }
