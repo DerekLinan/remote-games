@@ -8,15 +8,24 @@ export type JeopardyClue = {
   updated_at: string;
   category_id: number;
   game_id: number;
-  category: JeopardyCategory;
+  category: JeopardyCategoryInfo;
 };
 
 export type JeopardyCategory = {
   id: number;
   title: string;
+  clues_count: number;
+  clues: Omit<JeopardyClue, 'created_at' | 'updated_at' | 'category'>[];
+};
+
+export type JeopardyCategoryInfo = Omit<JeopardyCategory, 'clues'> & {
   created_at: string;
   updated_at: string;
-  clues_count: number;
+};
+
+export type QueryParams = {
+  categories: string;
+  questions: string;
 };
 
 export const enum SQUARESTATE {

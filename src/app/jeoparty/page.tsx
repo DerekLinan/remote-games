@@ -1,11 +1,10 @@
 import GameSquare from './game-square';
 import { SQUARESTATE, type JeopardyClue } from './types';
+import { getCategoryQuestions } from './utils';
 
-export const metadata = {
-  title: 'Jeoparty',
-};
+export default async function Jeopardy() {
+  const categories = await getCategoryQuestions();
 
-export default function Jeopardy() {
   const testClue: JeopardyClue = {
     id: 7601,
     answer: '"On The Radio"',
