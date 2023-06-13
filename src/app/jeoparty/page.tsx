@@ -1,13 +1,17 @@
 import GameSquare from './game-square';
 import { SQUARESTATE, type JeopardyClue } from './types';
 
+export const metadata = {
+  title: 'Jeoparty',
+};
+
 export default function Jeopardy() {
   const testClue: JeopardyClue = {
     id: 7601,
     answer: '"On The Radio"',
     question:
       "It's both the title of Donna Summer's hit of January 1980 \u0026 where you could hear it",
-    value: 100,
+    value: 1000,
     airdate: '1986-11-19T20:00:00.000Z',
     created_at: '2022-12-30T18:40:40.435Z',
     updated_at: '2022-12-30T18:40:40.435Z',

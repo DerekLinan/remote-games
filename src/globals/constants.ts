@@ -1,5 +1,6 @@
 export const names = {
   siteName: 'Remote Games',
+  description: 'Test website to learn NextJS, Tailwind, and Prisma',
 };
 
 export const links = {
