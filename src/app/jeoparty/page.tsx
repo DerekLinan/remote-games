@@ -12,17 +12,8 @@ export default async function Jeopardy() {
       "It's both the title of Donna Summer's hit of January 1980 \u0026 where you could hear it",
     value: 1000,
     airdate: '1986-11-19T20:00:00.000Z',
-    created_at: '2022-12-30T18:40:40.435Z',
-    updated_at: '2022-12-30T18:40:40.435Z',
     category_id: 1020,
     game_id: 2555,
-    category: {
-      id: 1020,
-      title: '"on" \u0026 "off" songs',
-      created_at: '2022-12-30T18:40:40.397Z',
-      updated_at: '2022-12-30T18:40:40.397Z',
-      clues_count: 5,
-    },
   };
   return (
     <div className='m-4'>

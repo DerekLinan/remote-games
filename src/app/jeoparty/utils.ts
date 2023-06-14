@@ -6,6 +6,7 @@ function getValidId(idsToIgnore: Set<number>) {
   let newId;
 
   do {
+    //TODO reinstate after testing complete
     // newId = getRandomInteger(1, jeopartyConsts.categoryCount);
     newId = getRandomInteger(1, 10);
   } while (idsToIgnore.has(newId));
@@ -25,7 +26,7 @@ async function fetchCategoryById(id: number): Promise<JeopardyCategory> {
 async function fetchCategoriesByParam(
   param: string,
 ): Promise<JeopardyCategory[]> {
-  const categoryIds = param.split(jeopartyConsts.categorySplitCharacter);
+  const categoryIds = param.split(jeopartyConsts.categorySeparator);
   if (categoryIds.length !== jeopartyConsts.categoriesToPlay)
     throw new Error('Invalid category url params.');
 
@@ -57,6 +58,7 @@ async function fetchRandomCategories(): Promise<JeopardyCategory[]> {
     do {
       const id = getValidId(idIgnoreSet);
       category = await fetchCategoryById(id);
+      //TODO add category id to blacklist
     } while (category.clues_count < 5);
 
     categories.push(category);
@@ -65,14 +67,53 @@ async function fetchRandomCategories(): Promise<JeopardyCategory[]> {
   return categories;
 }
 
+function selectCluesByParam(
+  categories: JeopardyCategory[],
+  questionParam: string,
+): JeopardyCategory[] {
+  const clueSelection = questionParam
+    .split(jeopartyConsts.categorySeparator)
+    .map(category => category.split(jeopartyConsts.questionSeparator));
+
+  const categoryWithSelection = clueSelection.map((qs, index) => {
+    categories[index].clues = qs.map(q => {
+      const clue = categories[index].clues.find(
+        clue => clue.id === parseInt(q),
+      );
+      if (!clue) throw new Error('Invalid Clue url params');
+      return clue;
+    });
+    return categories[index];
+  });
+
+  categoryWithSelection.map(category =>
+    category.clues.sort((a, b) => a.value - b.value),
+  );
+
+  return categoryWithSelection;
+}
+
+function selectRandomClues(categories: JeopardyCategory[]): JeopardyCategory[] {
+  categories.forEach(category => {
+    while (category.clues.length < jeopartyConsts.questionsToPlay) {
+      category.clues.splice(getRandomInteger(0, category.clues.length), 1);
+    }
+    category.clues.sort((a, b) => a.value - b.value);
+  });
+  return categories;
+}
+
 export async function getCategoryQuestions(
   queryParams?: QueryParams | undefined,
 ): Promise<JeopardyCategory[]> {
-  if (queryParams && queryParams.categories) {
-    return await fetchCategoriesByParam(queryParams.categories);
-  }
+  let categories: JeopardyCategory[];
 
-  return await fetchRandomCategories();
+  if (queryParams && queryParams.categories && queryParams.questions) {
+    categories = await fetchCategoriesByParam(queryParams.categories);
+    return selectCluesByParam(categories, queryParams.questions);
+  }
+  categories = await fetchRandomCategories();
+  return selectRandomClues(categories);
 }
 
 export async function generateURLParams(categories: JeopardyCategory[]) {}

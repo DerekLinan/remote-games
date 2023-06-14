@@ -9,7 +9,8 @@ export const jeopartyConsts = {
     return this.categoryCount.toString().length;
   },
   questionDigits: 3,
-  categorySplitCharacter: '-',
+  categorySeparator: '-',
+  questionSeparator: '_',
 };
 
 export const apiRoutes = {
