@@ -11,11 +11,11 @@ type Props = Clue & {
 
 function DisplayUnplayed({ clue }: Clue) {
   return (
-    <div className='group p-2 flex flex-col justify-center h-full bg-gradient-to-br from-blue-800 to-blue-700 hover:bg-gradient-to-br hover:from-yellow-800 hover:to-yellow-400'>
-      <span className='bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-yellow-200 hover:bg-gradient-to-tl group-hover:from-black group-hover:to-gray-800 text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl '>
+    <button className='group p-2 flex flex-col justify-center h-full bg-gradient-to-br from-blue-800 to-blue-700 hover:bg-gradient-to-br hover:from-yellow-800 hover:to-yellow-400 focus:bg-gradient-to-br focus:from-yellow-900 focus:to-yellow-500 focus:border focus:border-white'>
+      <span className='bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-yellow-200 hover:bg-gradient-to-tl group-hover:from-black group-hover:to-gray-800 group-focus:from-black group-focus:to-gray-800 text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl '>
         ${clue.value}
       </span>
-    </div>
+    </button>
   );
 }
 
@@ -62,20 +62,15 @@ function DisplayAnswered({ clue, state }: Props) {
 }
 
 export default function GameSquare({ clue, state }: Props) {
-  let content;
-
   switch (state) {
     case SQUARESTATE.Unplayed:
-      content = <DisplayUnplayed clue={clue} />;
-      break;
+      return <DisplayUnplayed clue={clue} />;
+
     case SQUARESTATE.Right:
     case SQUARESTATE.Wrong:
-      content = <DisplayAnswered {...{ clue, state }} />;
-      break;
-    default:
-      content = <div>State number {state} is unhandled</div>;
-  }
+      return <DisplayAnswered {...{ clue, state }} />;
 
-  //TODO move up one level into the mapping
-  return <button>{content}</button>;
+    default:
+      return <div>State number {state} is unhandled</div>;
+  }
 }

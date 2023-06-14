@@ -14,7 +14,6 @@ function getValidId(idsToIgnore: Set<number>) {
 }
 
 async function fetchCategoryById(id: number): Promise<JeopardyCategory> {
-  console.log('category ' + id + ' is being fecthed!');
   const res = await fetch(apiRoutes.category + id.toString());
 
   if (!res.ok) {
@@ -67,6 +66,16 @@ async function fetchRandomCategories(): Promise<JeopardyCategory[]> {
   return categories;
 }
 
+/** Since some of the questions from the api do not have clue values,
+ * check and replace with some value before sorting.
+ */
+function fillSort(category: JeopardyCategory) {
+  category.clues = category.clues.map(clue => {
+    return { ...clue, value: clue.value ?? 300 };
+  });
+  category.clues.sort((a, b) => a.value - b.value);
+}
+
 function selectCluesByParam(
   categories: JeopardyCategory[],
   questionParam: string,
@@ -86,19 +95,17 @@ function selectCluesByParam(
     return categories[index];
   });
 
-  categoryWithSelection.map(category =>
-    category.clues.sort((a, b) => a.value - b.value),
-  );
+  categoryWithSelection.map(category => fillSort(category));
 
   return categoryWithSelection;
 }
 
 function selectRandomClues(categories: JeopardyCategory[]): JeopardyCategory[] {
   categories.forEach(category => {
-    while (category.clues.length < jeopartyConsts.questionsToPlay) {
+    while (category.clues.length > jeopartyConsts.questionsToPlay) {
       category.clues.splice(getRandomInteger(0, category.clues.length), 1);
     }
-    category.clues.sort((a, b) => a.value - b.value);
+    fillSort(category);
   });
   return categories;
 }
