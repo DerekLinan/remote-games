@@ -7,11 +7,18 @@ type Clue = {
 
 type Props = Clue & {
   state: SQUARESTATE;
+  openDialog: () => void;
 };
 
-function DisplayUnplayed({ clue }: Clue) {
+function DisplayUnplayed({
+  clue,
+  openDialog,
+}: Clue & { openDialog: () => void }) {
   return (
-    <button className='group p-2 flex flex-col justify-center h-full bg-gradient-to-br from-blue-800 to-blue-700 hover:bg-gradient-to-br hover:from-yellow-800 hover:to-yellow-400 focus:bg-gradient-to-br focus:from-yellow-900 focus:to-yellow-500 focus:border focus:border-white'>
+    <button
+      onClick={openDialog}
+      className='group p-2 flex flex-col justify-center h-full bg-gradient-to-br from-blue-800 to-blue-700 hover:bg-gradient-to-br hover:from-yellow-800 hover:to-yellow-400 focus:bg-gradient-to-br focus:from-yellow-900 focus:to-yellow-500 focus:border focus:border-white'
+    >
       <span className='bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-yellow-200 hover:bg-gradient-to-tl group-hover:from-black group-hover:to-gray-800 group-focus:from-black group-focus:to-gray-800 text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl '>
         ${clue.value}
       </span>
@@ -19,7 +26,7 @@ function DisplayUnplayed({ clue }: Clue) {
   );
 }
 
-function DisplayAnswered({ clue, state }: Props) {
+function DisplayAnswered({ clue, state }: Clue & { state: SQUARESTATE }) {
   const wasRight = state === SQUARESTATE.Right;
   const prefixStyle = 'text-sm font-bold';
 
@@ -61,14 +68,14 @@ function DisplayAnswered({ clue, state }: Props) {
   );
 }
 
-export default function GameSquare({ clue, state }: Props) {
+export default function GameSquare({ clue, state, openDialog }: Props) {
   switch (state) {
     case SQUARESTATE.Unplayed:
-      return <DisplayUnplayed clue={clue} />;
+      return <DisplayUnplayed clue={clue} openDialog={openDialog} />;
 
     case SQUARESTATE.Right:
     case SQUARESTATE.Wrong:
-      return <DisplayAnswered {...{ clue, state }} />;
+      return <DisplayAnswered clue={clue} state={state} />;
 
     default:
       return <div>State number {state} is unhandled</div>;
