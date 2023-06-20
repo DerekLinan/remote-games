@@ -28,11 +28,11 @@ function DisplayUnplayed({
 
 function DisplayAnswered({ clue, state }: Clue & { state: SQUARESTATE }) {
   const wasRight = state === SQUARESTATE.Right;
-  const prefixStyle = 'text-sm font-bold';
+  const prefixStyle = 'text-sm font-bold flex flex-col content-center';
 
   return (
     <div
-      className={`p-2 text-xs xl:text-base ${
+      className={`p-2 text-xs xl:text-base flex justify-center ${
         wasRight
           ? 'bg-gradient-to-tr from-blue-800 to-blue-700'
           : 'bg-gradient-to-b from-blue-950 to-blue-900'
