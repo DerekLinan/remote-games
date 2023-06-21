@@ -1,6 +1,6 @@
 import { links, names, routes } from '@/globals/constants';
 import Link from 'next/link';
-import { IoLogoGameControllerB } from 'react-icons/Io';
+import { IoLogoGameControllerB } from 'react-icons/io';
 import {
   FaFolder,
   FaGithub,

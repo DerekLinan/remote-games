@@ -1,20 +1,27 @@
+'use client';
 import { names, routes } from '@/globals/constants';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FaBars } from 'react-icons/fa';
-import { IoLogoGameControllerB } from 'react-icons/Io';
+import { IoLogoGameControllerB } from 'react-icons/io';
 
 type LinkProps = {
   href: string;
-  className?: string;
   children?: React.ReactNode;
 };
 
-function NavLink({ href, className, children }: LinkProps) {
+function NavLink({ href, children }: LinkProps) {
+  const path = usePathname();
+
+  if (path.startsWith(href))
+    return (
+      <span className='text-yellow-400 underline underline-offset-8 decoration-sky-500'>
+        {children}
+      </span>
+    );
+
   return (
-    <Link
-      href={href}
-      className={`hover:text-yellow-400 transition-colors ${className}`}
-    >
+    <Link href={href} className={`hover:text-yellow-400 transition-colors`}>
       {children}
     </Link>
   );
