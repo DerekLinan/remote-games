@@ -7,6 +7,7 @@ type Clue = {
 
 type Props = Clue & {
   state: SQUARESTATE;
+  guesses: boolean[];
   openDialog: () => void;
 };
 
@@ -26,56 +27,70 @@ function DisplayUnplayed({
   );
 }
 
-function DisplayAnswered({ clue, state }: Clue & { state: SQUARESTATE }) {
+function DisplayAnswered({ clue, state, guesses }: Omit<Props, 'openDialog'>) {
   const wasRight = state === SQUARESTATE.Right;
-  const prefixStyle = 'text-sm font-bold flex flex-col content-center';
+  const prefixStyle = 'text-sm font-bold content-center';
 
   return (
     <div
-      className={`p-2 text-xs xl:text-base flex justify-center ${
+      className={`p-2 text-xs xl:text-base flex content-center ${
         wasRight
           ? 'bg-gradient-to-tr from-blue-800 to-blue-700'
           : 'bg-gradient-to-b from-blue-950 to-blue-900'
       }`}
     >
       <div
-        className={`bg-clip-text text-transparent bg-gradient-to-br ${
+        className={`bg-clip-text text-transparent bg-gradient-to-br flex flex-col justify-center ${
           wasRight
             ? 'from-yellow-500 to-yellow-200'
-            : 'from-gray-300 to-gray-400'
+            : 'from-gray-200 to-gray-500'
         }`}
       >
         <div>
-          <span className={prefixStyle}>Q:</span> {clue.question}
+          <span className={prefixStyle}>Q: </span>
+          {clue.question}
         </div>
         <div>
-          <span className={prefixStyle}>A:</span> {clue.answer}
+          <span className={prefixStyle}>A: </span>
+          {clue.answer}
         </div>
         <div>
-          <span className={prefixStyle}>Aired:</span>{' '}
+          <span className={prefixStyle}>Aired: </span>
           {new Date(clue.airdate).getFullYear()}
         </div>
         <div className='flex justify-between'>
-          {clue.value}
-          {wasRight ? (
-            <FaCheck className='text-green-400' />
-          ) : (
-            <FaTimes className='text-red-600' />
-          )}
+          <div>
+            <span className={prefixStyle}>Points: </span>
+            {clue.value}
+          </div>
+          <div className='flex'>
+            {guesses?.map((guess, index) => {
+              return guess ? (
+                <FaCheck key={index} className='text-green-400' />
+              ) : (
+                <FaTimes key={index} className='text-red-600' />
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default function GameSquare({ clue, state, openDialog }: Props) {
+export default function GameSquare({
+  clue,
+  state,
+  guesses,
+  openDialog,
+}: Props) {
   switch (state) {
     case SQUARESTATE.Unplayed:
       return <DisplayUnplayed clue={clue} openDialog={openDialog} />;
 
     case SQUARESTATE.Right:
     case SQUARESTATE.Wrong:
-      return <DisplayAnswered clue={clue} state={state} />;
+      return <DisplayAnswered clue={clue} state={state} guesses={guesses} />;
 
     default:
       return <div>State number {state} is unhandled</div>;

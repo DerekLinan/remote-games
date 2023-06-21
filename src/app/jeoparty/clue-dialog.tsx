@@ -1,18 +1,12 @@
-import {
-  ButtonHTMLAttributes,
-  HtmlHTMLAttributes,
-  ReactNode,
-  RefObject,
-  forwardRef,
-  useEffect,
-  useRef,
-} from 'react';
-import { JeopardyClue } from './types';
+import { FormEvent, ReactNode, useEffect, useRef, useState } from 'react';
+import { MdCancelPresentation } from 'react-icons/md';
+import { type JeopardyClue } from './types';
+import { isCorrect } from './utils';
 
 type Props = {
   open: boolean;
-  clue?: JeopardyClue;
-  setSquareState: (correct: boolean) => void;
+  clue: JeopardyClue;
+  setSquareState: (guesses: boolean[]) => void;
 };
 
 function Button({
@@ -21,7 +15,6 @@ function Button({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
 }) {
-  console.log(props.className);
   return (
     <button
       className={`rounded bg-blue-300 px-2 ${props.className}`}
@@ -33,8 +26,10 @@ function Button({
 }
 
 export default function ClueDialog({ open, clue, setSquareState }: Props) {
-  console.log(open);
+  const maxGuesses = 3;
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [guess, setGuess] = useState<string>('');
+  const [guessStates, setGuessStates] = useState<boolean[]>([]);
 
   useEffect(() => {
     if (open) {
@@ -44,15 +39,35 @@ export default function ClueDialog({ open, clue, setSquareState }: Props) {
     }
   }, [open]);
 
+  function resetState() {
+    setGuess('');
+    setGuessStates([]);
+  }
+
   function handleClose() {
-    setSquareState(false);
+    setSquareState(guessStates);
+    resetState();
+  }
+
+  function handleGuess(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    //TODO notify user
+    if (!guess) return;
+    const correct = isCorrect(guess, clue?.answer);
+    if (correct || guessStates.length + 1 === maxGuesses) {
+      setSquareState([...guessStates, correct]);
+      resetState();
+      return;
+    }
+    setGuessStates(current => [...current, correct]);
+    setGuess('');
   }
 
   return (
     <dialog
       ref={dialogRef}
       className='backdrop:bg-opacity-80 backdrop:backdrop-blur backdrop:bg-black bg-gradient-to-tr from-blue-800 to-blue-700 lg:max-w-4xl'
-      onCancel={() => setSquareState(false)}
+      onCancel={() => handleClose()}
     >
       {clue && (
         <>
@@ -67,15 +82,28 @@ export default function ClueDialog({ open, clue, setSquareState }: Props) {
           <div className='my-4 font-bold text-4xl text-center lg:text-5xl select-none bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-yellow-200'>
             {clue.question}
           </div>
-          <form className='text-xl m-4 flex flex-col gap-2 text-center'>
+          <div className='flex justify-center gap-3 text-red-700 text-7xl lg:text-9xl'>
+            {guessStates.map((_, index) => (
+              <MdCancelPresentation key={index} />
+            ))}
+          </div>
+          <form
+            className='text-xl m-4 flex flex-col gap-2 text-center'
+            onSubmit={e => handleGuess(e)}
+          >
             <p>Type your guess below:</p>
             <input
               type='text'
+              value={guess}
+              onChange={e => setGuess(e.target.value)}
+              spellCheck
               className='rounded px-2 py-1 text-2xl bg-blue-300 w-full text-center'
             />
             <div className='flex gap-4 justify-center'>
-              <Button onSubmit={() => {}}>Give Up</Button>
-              <Button onSubmit={() => {}}>Guess</Button>
+              <Button type='button' onClick={() => handleClose()}>
+                Give Up
+              </Button>
+              <Button type='submit'>Guess</Button>
             </div>
           </form>
         </>

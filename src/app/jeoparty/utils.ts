@@ -124,3 +124,7 @@ export async function getCategoryQuestions(
 }
 
 export async function generateURLParams(categories: JeopardyCategory[]) {}
+
+export function isCorrect(guess: string, answer: string): boolean {
+  return guess.normalize().toLowerCase() == answer.normalize().toLowerCase();
+}

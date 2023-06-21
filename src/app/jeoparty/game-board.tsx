@@ -4,7 +4,6 @@ import GameSquare from './game-square';
 import { JeopardyCategory, JeopardyClue, SQUARESTATE } from './types';
 import ClueDialog from './clue-dialog';
 import React, { useState } from 'react';
-import { FaShareAlt } from 'react-icons/fa';
 import StatPanel from './stat-panel';
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
 
 export default function GameBoard({ categories }: Props) {
   const [states, setstates] = useState<{
-    [key: string]: SQUARESTATE;
+    [key: string]: { state: SQUARESTATE; guesses: boolean[] };
   }>({});
   const [currentClue, setCurrentClue] = useState<{
     id: string;
@@ -26,11 +25,16 @@ export default function GameBoard({ categories }: Props) {
     });
   }
 
-  function setSquareState(correct: boolean) {
+  function setSquareState(correct: boolean[]) {
     if (!currentClue) return;
     setstates(prevStates => ({
       ...prevStates,
-      [currentClue.id]: SQUARESTATE.Wrong,
+      [currentClue.id]: {
+        state: correct?.some(guess => guess)
+          ? SQUARESTATE.Right
+          : SQUARESTATE.Wrong,
+        guesses: correct,
+      },
     }));
     setCurrentClue(null);
   }
@@ -50,7 +54,8 @@ export default function GameBoard({ categories }: Props) {
                     <GameSquare
                       key={id}
                       clue={clue}
-                      state={states[id] ?? SQUARESTATE.Unplayed}
+                      state={states[id]?.state ?? SQUARESTATE.Unplayed}
+                      guesses={states[id]?.guesses}
                       openDialog={() => openDialog(id, clue)}
                     />
                   );
@@ -61,11 +66,13 @@ export default function GameBoard({ categories }: Props) {
         </div>
       </div>
 
-      <ClueDialog
-        open={currentClue ? true : false}
-        setSquareState={setSquareState}
-        clue={currentClue?.clue}
-      />
+      {currentClue && (
+        <ClueDialog
+          open={currentClue ? true : false}
+          setSquareState={setSquareState}
+          clue={currentClue.clue}
+        />
+      )}
     </div>
   );
 }
