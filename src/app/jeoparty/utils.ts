@@ -13,13 +13,26 @@ function getValidId(idsToIgnore: Set<number>) {
   return newId;
 }
 
+/**
+ * Removes simple html brackets
+ */
+function removeSpecialCharacters(str: string): string {
+  return str.replace(/<\/?[^>]+(>|$)/g, '');
+}
+
 async function fetchCategoryById(id: number): Promise<JeopardyCategory> {
   const res = await fetch(apiRoutes.category + id.toString());
 
   if (!res.ok) {
     throw new Error(`Problem fetching category ${id}.`);
   }
-  return res.json() as Promise<JeopardyCategory>;
+
+  const data = (await res.json()) as JeopardyCategory;
+  data.clues.forEach(clue => {
+    clue.answer = removeSpecialCharacters(clue.answer);
+    clue.question = removeSpecialCharacters(clue.question);
+  });
+  return data;
 }
 
 async function fetchCategoriesByParam(
@@ -126,5 +139,29 @@ export async function getCategoryQuestions(
 export async function generateURLParams(categories: JeopardyCategory[]) {}
 
 export function isCorrect(guess: string, answer: string): boolean {
-  return guess.normalize().toLowerCase() == answer.normalize().toLowerCase();
+  const ignoreWords = new RegExp(/\b(the|a|an)\b/g, 'i');
+  const ignoreChars = new RegExp(/s\b|[-<>?!@#$%^*(),._+=\"'\{\}\[\]]*/g);
+  const parensGroup = new RegExp(/\(([^)]+)\)/g);
+
+  function normalize(str: string): string {
+    return str
+      .normalize()
+      .toLowerCase()
+      .replaceAll('&', 'and')
+      .replaceAll(parensGroup, '')
+      .replace(ignoreWords, '')
+      .replace(ignoreChars, '')
+      .trim();
+  }
+
+  const stdGuess = normalize(guess);
+
+  if (stdGuess == normalize(answer)) return true;
+  const parensAnswer = answer.match(/(?<=\().*?(?=\))/);
+
+  if (parensAnswer) {
+    return stdGuess == normalize(parensAnswer[0]);
+  }
+
+  return false;
 }
