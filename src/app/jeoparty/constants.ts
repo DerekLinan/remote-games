@@ -11,6 +11,8 @@ export const jeopartyConsts = {
   questionDigits: 3,
   categorySeparator: '-',
   questionSeparator: '_',
+  disclaimer:
+    'These clue/answers come from a third party api (jservice.io) and cannot be guaranteed to be properly solvable.',
 };
 
 export const apiRoutes = {
