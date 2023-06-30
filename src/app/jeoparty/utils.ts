@@ -6,9 +6,7 @@ function getValidId(idsToIgnore: Set<number>) {
   let newId;
 
   do {
-    //TODO reinstate after testing complete
-    // newId = getRandomInteger(1, jeopartyConsts.categoryCount);
-    newId = getRandomInteger(1, 10);
+    newId = getRandomInteger(1, jeopartyConsts.categoryCount);
   } while (idsToIgnore.has(newId));
   return newId;
 }
@@ -21,7 +19,9 @@ function removeSpecialCharacters(str: string): string {
 }
 
 async function fetchCategoryById(id: number): Promise<JeopardyCategory> {
-  const res = await fetch(apiRoutes.category + id.toString());
+  const res = await fetch(apiRoutes.category + id.toString(), {
+    cache: 'no-store',
+  });
 
   if (!res.ok) {
     throw new Error(`Problem fetching category ${id}.`);
