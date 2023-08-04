@@ -7,7 +7,7 @@ export default function CategorySquare({
   title: string;
   disclaimer?: boolean;
 }) {
-  let fontSize = 'text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl';
+  let fontSize = 'text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl';
 
   return (
     <div
