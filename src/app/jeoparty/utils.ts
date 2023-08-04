@@ -1,4 +1,4 @@
-import { getRandomInteger } from '@/globals/utils';
+import { delay, getRandomInteger } from '@/globals/utils';
 import { apiRoutes, jeopartyConsts } from './constants';
 import type { JeopardyCategory, QueryParams } from './types';
 
@@ -19,6 +19,7 @@ function removeSpecialCharacters(str: string): string {
 }
 
 async function fetchCategoryById(id: number): Promise<JeopardyCategory> {
+  await delay(50); // avoid too many quick requests on external api
   const res = await fetch(apiRoutes.category + id.toString(), {
     cache: 'no-store',
   });
@@ -42,11 +43,10 @@ async function fetchCategoriesByParam(
   if (categoryIds.length !== jeopartyConsts.categoriesToPlay)
     throw new Error('Invalid category url params.');
 
-  const categories = await Promise.all(
-    categoryIds.map(categoryId => {
-      return fetchCategoryById(parseInt(categoryId));
-    }),
-  );
+  const categories: JeopardyCategory[] = [];
+  categoryIds.forEach(async categoryId => {
+    categories.push(await fetchCategoryById(parseInt(categoryId)));
+  });
 
   const tooFewQuestions = categories.find(
     category => category.clues_count < jeopartyConsts.questionsToPlay,
