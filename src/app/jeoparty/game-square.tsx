@@ -20,7 +20,7 @@ function DisplayUnplayed({
       onClick={openDialog}
       className='group p-2 flex flex-col justify-center h-full bg-gradient-to-br from-blue-800 to-blue-700 hover:bg-gradient-to-br hover:from-yellow-800 hover:to-yellow-400 focus:bg-gradient-to-br focus:from-yellow-900 focus:to-yellow-500 focus:border focus:border-white'
     >
-      <span className='bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-yellow-200 hover:bg-gradient-to-tl group-hover:from-black group-hover:to-gray-800 group-focus:from-black group-focus:to-gray-800 text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl '>
+      <span className='m-auto bg-clip-text text-transparent bg-gradient-to-br from-yellow-500 to-yellow-200 hover:bg-gradient-to-tl group-hover:from-black group-hover:to-gray-800 group-focus:from-black group-focus:to-gray-800 text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl '>
         ${clue.value}
       </span>
     </button>
