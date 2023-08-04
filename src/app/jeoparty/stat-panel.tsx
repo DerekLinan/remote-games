@@ -1,6 +1,10 @@
 import { FaShareAlt, FaQuestionCircle, FaPlus } from 'react-icons/fa';
 import { PlayStates } from './game-board';
 import { SQUARESTATE } from './types';
+import { useState } from 'react';
+import HelpDialog from '@/components/help-dialog';
+import JeopartyHelpDialog from './jeoparty-help-dialog';
+import { useRouter } from 'next/navigation';
 
 const columnStyles = 'flex flex-col flex-grow basis-0';
 const specialFont =
@@ -8,13 +12,16 @@ const specialFont =
 
 function PanelButton({
   className,
+  onClick,
   children,
 }: {
   className?: string;
+  onClick?: any;
   children?: React.ReactNode;
 }) {
   return (
     <button
+      onClick={onClick}
       className={
         'group self-center w-24 rounded flex gap-2 p-2 justify-center bg-gradient-to-br from-blue-800 to-blue-700 hover:from-yellow-800 hover:to-yellow-400 focus:bg-gradient-to-br focus:ring-2 focus:ring-white focus:ring-inset' +
         ` ${className}`
@@ -56,6 +63,8 @@ export default function StatPanel({
   playStates: PlayStates;
   isFinished?: boolean;
 }) {
+  const [isHelpOpen, setIsHelpOpen] = useState<boolean>(false);
+  const router = useRouter();
   const stats = CalculateStats(playStates);
 
   return (
@@ -69,7 +78,7 @@ export default function StatPanel({
               </span>
             </div>
             <div>New game board: </div>
-            <PanelButton>
+            <PanelButton onClick={() => location.reload()}>
               <FaPlus className='text-yellow-300 group-hover:text-black' />
             </PanelButton>
           </>
@@ -94,8 +103,9 @@ export default function StatPanel({
               Right: <span className={specialFont}>{stats.right}</span>
             </span>
             <button>
-              <FaQuestionCircle />
+              <FaQuestionCircle onClick={() => setIsHelpOpen(true)} />
             </button>
+            <JeopartyHelpDialog open={isHelpOpen} setIsOpen={setIsHelpOpen} />
           </div>
           <div>
             Wrong: <span className={specialFont}>{stats.wrong}</span>
