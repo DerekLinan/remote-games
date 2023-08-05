@@ -29,18 +29,22 @@ function NavLink({ href, children }: LinkProps) {
 
 export default function Navbar() {
   return (
-    <nav className='p-2 flex justify-between'>
-      <Link href={'/'} className='flex gap-1'>
-        <span className='text-xl'>{names.siteName}</span>
-        <IoLogoGameControllerB className='fill-yellow-400 text-xl' />
-      </Link>
-      <span className='flex gap-2'>
-        <NavLink href={routes.about}>About</NavLink>
-        <NavLink href={routes.jeoparty}>Jeoparty</NavLink>
-      </span>
-      <ul className='hover:cursor-not-allowed tooltip-aftr after:content-["in_development..."] after:whitespace-nowrap after:-translate-x-full after:rounded-tr-none'>
-        <FaBars className='text-2xl px-1' />
-      </ul>
+    <nav>
+      <div className='pb-1 bg-gradient-to-r from-red-600 via-[#6EE7B7] via-[#3B82F6] to-[#9333EA]'>
+        <div className='bg-black p-4 text-xl flex justify-between'>
+          <Link href={'/'} className='flex flex-shrink-0 gap-1'>
+            <span className='text-2xl'>{names.siteName}</span>
+            <IoLogoGameControllerB className='fill-yellow-400 text-xl' />
+          </Link>
+          <ul className='gap-2 hidden [@media(min-width:384px)]:flex'>
+            <NavLink href={routes.about}>About</NavLink>
+            <NavLink href={routes.jeoparty}>Jeoparty</NavLink>
+          </ul>
+          <ul className='hover:cursor-not-allowed tooltip-aftr after:content-["in_development..."] after:whitespace-nowrap after:-translate-x-full after:rounded-tr-none'>
+            <FaBars className='text-2xl px-1' />
+          </ul>
+        </div>
+      </div>
     </nav>
   );
 }
