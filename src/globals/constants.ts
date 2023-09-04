@@ -6,7 +6,7 @@ export const names = {
 export const links = {
   myGitHub: 'https://github.com/DerekLinan',
   projectGitHub: 'https://github.com/DerekLinan/remote-games',
-  linkedIn: 'https://www.linkedin.com/in/derek-linan-33716621b/',
+  linkedIn: 'http://www.linkedin.com/in/derek-l-33716621b',
   jservice: 'http://jservice.io/',
 };
 
