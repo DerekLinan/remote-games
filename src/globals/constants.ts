@@ -4,6 +4,7 @@ export const names = {
 };
 
 export const links = {
+  portfolio: 'https://derek.linan.tech/',
   myGitHub: 'https://github.com/DerekLinan',
   projectGitHub: 'https://github.com/DerekLinan/remote-games',
   linkedIn: 'http://www.linkedin.com/in/derek-l-33716621b',

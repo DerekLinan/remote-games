@@ -55,9 +55,9 @@ export function Footer() {
         <FooterLink link={routes.about} notExternal>
           About
         </FooterLink>
-        <FooterLink link={routes.contact} notExternal>
+        {/* <FooterLink link={routes.contact} notExternal>
           Contact
-        </FooterLink>
+        </FooterLink> */}
       </Column>
       <Column>
         <FooterLink link={links.projectGitHub}>Source Code</FooterLink>
@@ -65,10 +65,10 @@ export function Footer() {
       </Column>
       <Column>
         <p>By Derek Linan, 2023</p>
-        <div className='flex gap-1 hover:cursor-not-allowed tooltip-aftr after:content-["in_development..."] after:whitespace-nowrap after:-translate-x-full after:-translate-y-1'>
+        <FooterLink link={links.portfolio}>
           <FaFolder className={iconStyle} />
           Portfolio
-        </div>
+        </FooterLink>
         <FooterLink link={links.linkedIn}>
           <FaLinkedin className={iconStyle} />
           LinkedIn

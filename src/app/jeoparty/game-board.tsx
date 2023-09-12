@@ -54,7 +54,7 @@ export default function GameBoard({ categories }: Props) {
         }
       />
       <div className='overflow-x-auto overflow-y-hidden'>
-        <div className='min-w-[50rem] grid grid-flow-col grid-cols-6 grid-rows-6 gap-4'>
+        <div className='min-w-[50rem] max-w-[1920px] mx-auto grid grid-flow-col grid-cols-6 grid-rows-6 gap-4'>
           {categories.map(category => {
             return (
               <React.Fragment key={category.id}>
