@@ -2,9 +2,10 @@ export const jeopartyConsts = {
   categoriesToPlay: 6,
   questionsToPlay: 5,
   /** Total number of categories in the jServiceApi  */
-  categoryCount: 28163,
+  // categoryCount: 28163,
+  categoryCount: 10,
   /** Manually discovered categories that do not have enough questions for Jeoparty */
-  invalidCategories: [1, 21, 35, 70, 78, 128],
+  invalidCategories: [1, 16, 21, 35, 70, 78, 128],
   categoryDigits: function () {
     return this.categoryCount.toString().length;
   },
